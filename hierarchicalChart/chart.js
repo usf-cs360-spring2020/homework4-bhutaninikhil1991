@@ -33,16 +33,15 @@ const start = d3.timeDay(new Date(2020, 1, 1));
 const format = d3.timeFormat("%Y-%m-%dT%H:%M:%S");
 console.log(format(start), format(end));
 
-//var file = "https://gist.githubusercontent.com/mbostock/4339184/raw/aa24e1009864fc911a76935a740c9481a91cfc16/flare.csv";
 var file = "https://data.sfgov.org/resource/nuek-vuh3.csv";
 file += "?$limit=3000&$where=supervisor_district='10'"; //$limit=1&
 file += " AND received_dttm between '" + format(start) + "'";
 file += " and '" + format(end) + "'";
-file += " AND battalion not like 'B99'";
+file += " AND battalion not like 'B99'"
 file += " AND call_type_group not like ''";
 file += " AND city like 'San Francisco' AND station_area not like ''";
 
-console.log(file);
+//console.log(file);
 
 d3.csv(file).then(groupData).then(callback);
 
@@ -51,7 +50,6 @@ function formatData(data) {
   var elements = [];
 
   //console.log(data);
-
   let incidentcountperSD = 0;
   let incidentcountperSA = 0;
   let incidentcountperB = 0;
@@ -59,45 +57,47 @@ function formatData(data) {
     elements.push(supervisor_district);
 
     incidentcountperSD = 0;
-    Object.keys(data[supervisor_district]).sort(function(a, b) {
-      return d3.ascending(a, b);
-    }).forEach(function(battalion, index) {
-      elements.push(battalion);
-      incidentcountperB = 0;
-      Object.keys(data[supervisor_district][battalion]).forEach(function(station_area, index) {
-        elements.push(station_area);
-        incidentcountperSA = 0;
-        Object.keys(data[supervisor_district][battalion][station_area]).forEach(function(call_type_group, index) {
-          elements.push(call_type_group);
-          incidentcountperSA += parseInt(data[supervisor_district][battalion][station_area][call_type_group]);
+    Object.keys(data[supervisor_district])
+      // .sort(function(a, b) {
+      //   return d3.ascending(a, b);
+      // })
+      .forEach(function(battalion, index) {
+        elements.push(battalion);
+        incidentcountperB = 0;
+        Object.keys(data[supervisor_district][battalion]).forEach(function(station_area, index) {
+          elements.push(station_area);
+          incidentcountperSA = 0;
+          Object.keys(data[supervisor_district][battalion][station_area]).forEach(function(call_type_group, index) {
+            elements.push(call_type_group);
+            incidentcountperSA += parseInt(data[supervisor_district][battalion][station_area][call_type_group]);
+            result.push({
+              'id': elements.join('.'),
+              'value': parseInt(data[supervisor_district][battalion][station_area][call_type_group]),
+              'isleaf': true
+            })
+
+            elements.pop();
+          });
+
+          incidentcountperB += incidentcountperSA;
+          incidentcountperSD += incidentcountperB;
           result.push({
             'id': elements.join('.'),
-            'value': parseInt(data[supervisor_district][battalion][station_area][call_type_group]),
-            'isleaf': true
+            'value': incidentcountperSA,
+            'isleaf': false
           })
 
           elements.pop();
         });
-
-        incidentcountperB += incidentcountperSA;
         incidentcountperSD += incidentcountperB;
         result.push({
           'id': elements.join('.'),
-          'value': incidentcountperSA,
+          'value': incidentcountperB,
           'isleaf': false
         })
 
         elements.pop();
       });
-      incidentcountperSD += incidentcountperB;
-      result.push({
-        'id': elements.join('.'),
-        'value': incidentcountperB,
-        'isleaf': false
-      })
-
-      elements.pop();
-    });
 
     result.push({
       'id': elements.join('.'),
@@ -119,13 +119,13 @@ function groupData(data) {
   //console.log(data);
   let dataGroup = d3.nest()
     .key(function(d) {
-      return "SupervisorDistrict_" + d.supervisor_district;
+      return "SupervisorDistrict:" + d.supervisor_district;
     })
     .key(function(d) {
-      return d.battalion;
+      return "Batallion:" + d.battalion.substring(1);
     })
     .key(function(d) {
-      return "StationArea_" + d.station_area;
+      return "StationArea:" + d.station_area;
     })
     .key(function(d) {
       return d.call_type_group;
@@ -135,7 +135,7 @@ function groupData(data) {
     })
     .object(data);
 
-  console.log(dataGroup);
+  //console.log(dataGroup);
 
   return formatData(dataGroup);
 }
@@ -195,7 +195,7 @@ function callback(data) {
     d3.legendColor()
     .shapeWidth(30)
     .cells(root.height + 1)
-    .orient("horizontal")
+    .orient("vertical")
     .scale(color));
 }
 
@@ -270,6 +270,7 @@ function drawTraditionalStraight(id, root) {
   drawLinks(g, root.links(), straightLine);
   drawNodes(g, root.descendants(), true);
 }
+
 
 function drawCirclePacking(id, root) {
   var svg = d3.select("body").select("#" + id);

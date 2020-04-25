@@ -23,9 +23,9 @@ function show_tooltip(g, node) {
   // retrieve node attributes (calculate middle point)
   var x = nbox.x + shift_x;
   var y = nbox.y + shift_y;
-
+  var format = d3.format("~s");
   //var text = node.attr("id") + (node.attr("isleaf") === "true" ?  "("+node.attr("incidentcount")+")" : "");
-  var text = node.attr("id") + "(" + node.attr("incidentcount") + ")";
+  var text = node.attr("id") + "(" + format(node.attr("incidentcount")) + ")";
 
   // create tooltip
   var tooltip = g.append("text")
