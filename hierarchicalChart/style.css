@@ -37,3 +37,7 @@
 .node--leaf {
   pointer-events: none;
 }
+
+figure {
+  border-style: solid;
+}

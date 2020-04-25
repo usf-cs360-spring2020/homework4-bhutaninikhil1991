@@ -186,17 +186,39 @@ function callback(data) {
   drawCirclePacking("circle_packing", root.copy());
 
   //add legend
-  const legendWidth = 200;
-  const legendHeight = 200;
-  let legendsvg = d3.select("#d3ImplementationSection").select("#legend-svg");
-  // .attr("width", legendWidth)
-  // .attr("height", legendHeight);
-  legendsvg.append("g").call(
-    d3.legendColor()
-    .shapeWidth(30)
-    .cells(root.height + 1)
-    .orient("vertical")
-    .scale(color));
+  const legendWidth = 300;
+  const legendHeight = 300;
+  let legendsvg = d3.select("#d3ImplementationSection").select("#legend-svg")
+    .attr("width", legendWidth)
+    .attr("height", legendHeight);
+
+  legendsvg.append("g")
+    .attr("transform", "translate(0,20)")
+    .call(
+      d3.legendColor()
+      .shapeWidth(30)
+      .cells(root.height + 1)
+      .title('Level')
+      .orient("vertical")
+      .scale(color));
+
+  var ordinal = d3.scaleOrdinal()
+    .domain(["SupervisorDistrict", "Battalion", "StationArea", "Call Type Group"])
+    .range(["rgb(253, 231, 37)", "rgb(53, 183, 121)", "rgb(49, 104, 142)", "rgb(68, 1, 84)"]);
+
+  legendsvg.append("g")
+    .attr("class", "legendOrdinal")
+    .attr("transform", "translate(0,140)");
+
+  var legendOrdinal = d3.legendColor()
+    .shape('circle')
+    .shapePadding(5)
+    .labelOffset(50)
+    .title('Nodes')
+    .scale(ordinal);
+
+  legendsvg.select(".legendOrdinal")
+    .call(legendOrdinal);
 }
 
 function drawNodes(g, nodes, raise) {
