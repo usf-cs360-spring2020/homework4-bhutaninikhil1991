@@ -1,21 +1,22 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- TODO: Change title -->
-    <title>Website Template</title>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Load Bulma from CDN (consider saving it to repository instead) -->
-    <!-- https://bulma.io/ -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
+  <!-- TODO: Change title -->
+  <title>Homework 4</title>
 
-    <!-- Load Font Awesome 5 (free) icons -->
-    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
-  </head>
+  <!-- Load Bulma from CDN (consider saving it to repository instead) -->
+  <!-- https://bulma.io/ -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
 
-  <body>
+  <!-- Load Font Awesome 5 (free) icons -->
+  <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+</head>
+
+<body>
 
   <!-- Page header -->
   <!-- https://bulma.io/documentation/layout/hero/ -->
@@ -23,9 +24,9 @@
     <div class="hero-body">
       <div class="container">
         <!-- TODO: Change title -->
-        <h1 class="title">Website Title</h1>
+        <h1 class="title">Homework 4</h1>
         <!-- TODO: Change subtitle -->
-        <h2 class="subtitle">Website Subtitle</h2>
+        <h2 class="subtitle">SF Fire Department Calls for Service DataSet Analysis</h2>
       </div>
     </div>
   </section>
@@ -65,16 +66,16 @@
             </a>
 
             <div class="navbar-dropdown">
-              <a class="navbar-item">
+              <a class="navbar-item" href="#d3ImplementationSection" id="nav_nodechart">
                 <span class="icon"><i class="fas fa-chart-line"></i></span>
-                <span>Line Chart</span>
+                <span>Node Link Diagram</span>
               </a>
-              <a class="navbar-item">
+              <a class="navbar-item" href="#d3ImplementationSection" id="nav_spacechart">
                 <span class="icon"><i class="fas fa-chart-area"></i></span>
-                <span>Area Chart</span>
+                <span>Space filling Diagram</span>
               </a>
 
-              <hr class="navbar-divider">
+              <!-- <hr class="navbar-divider">
 
               <a class="navbar-item">
                 <span class="icon"><i class="fas fa-chart-bar"></i></span>
@@ -83,7 +84,7 @@
               <a class="navbar-item">
                 <span class="icon"><i class="fas fa-chart-pie"></i></span>
                 <span>Pie Chart</span>
-              </a>
+              </a> -->
             </div>
           </div>
         </div>
@@ -110,80 +111,132 @@
     <div class="container">
       <!-- Begin page content -->
       <div class="content">
+
         <h1 class="title">
           <!-- TODO: Change page title -->
-          Page Title
+          Fire Department Calls for Service
         </h1>
-        <p class="subtitle">
-          <!-- TODO: Change page subtitle -->
-          Page Subtitle
-        </p>
 
-        <p>This would be an excellent place to describe what this page is for, what to find in different sections, describe any motivation or theme behind your visualizations, and so on.</p>
-
-        <p>You should not use this template unless you intend to customize it. Make it your own. Keep in mind this simple template is over 300 lines! You can see other examples of websites using Bulma at their showcase: <a href="https://bulma.io/expo/">bulma.io/expo/</a>.</p>
+        <p>This example visualizes the Fire Department Calls for Service dataset from DataSF(<a href="https://datasf.org/opendata/" target="_blank">https://datasf.org/opendata/</a>).</p>
 
         <h2 id="data">Data</h2>
 
-        <p>Include some detailed information about the dataset here. You should <a href="#">add a link</a> to the original dataset. You might also want to quote the license:</p>
-
+        <p>Fire Calls-For-Service includes all fire units responses to calls. Each record includes the call number, incident number, address, unit identifier, call type, and disposition. All relevant time intervals are also included. Because this
+          dataset is based on responses, and since most calls involved multiple units, there are multiple records for each call number. Addresses are associated with a block number, intersection or call box, not a specific address.</p>
+        <p>The original dataset includes over 5.21M rows as of 16 February 2020. The original dataset includes 34 columns and each row is a response. The direct link to data set is: <a
+            href="https://data.sfgov.org/Public-Safety/Fire-Department-Calls-for-Service/nuek-vuh3/data" target="_blank">https://data.sfgov.org/Public-Safety/Fire-Department-Calls-for-Service/nuek-vuh3/data</a> . The full citation is :</p>
         <blockquote>
           <p>
-            "This data is made available under the Public Domain Dedication and License v1.0 whose full text can be found at: <a href="http://www.opendatacommons.org/licenses/pddl/1.0/">www.opendatacommons.org/licenses/pddl/1.0/</a>"
+            "This data is made available under the Public Domain Dedication and License v1.0 whose full text can be found at: <a href="http://www.opendatacommons.org/licenses/pddl/1.0/" target="_blank">www.opendatacommons.org/licenses/pddl/1.0/</a>"
           </p>
-          <cite>Put a citation here, possibly link to the dataset license information directly.</cite>
+          <cite>Data acquired from <a href="https://datasf.org/opendata/" target="_blank">https://datasf.org/opendata/</a> on February 16 2020. Aggregated data on this page is made freely available under Open Data Commons Public Domain Dedication and
+            License(<a href="https://opendatacommons.org/licenses/pddl/1.0/" target="_blank">https://opendatacommons.org/licenses/pddl/1.0/</a>).</cite>
         </blockquote>
 
-        <p>In addition to including a link to the source and license, you should describe the data. You might want a list of some sort to enumerate the different types of columns:</p>
+        <p>The dataset has following columns:</p>
 
         <ol>
-          <li><strong>Column Name:</strong> Give a description of the column, including its type and possible range of values.</li>
+          <li><strong>Call Number:</strong> A unique 9-digit number assigned by the 911 Dispatch Center (DEM) to this call. These number are used for both Police and Fire calls. The column is encoded as plain text.</li>
 
-          <li><strong>Column Name:</strong> Give a description of the column, including its type and possible range of values.</li>
+          <li><strong>Unit ID:</strong> Unit Identifier. For example E01 for Engine 1 or T01 for Truck 1. The column is encoded as plain text.</li>
 
-          <li><strong>Column Name:</strong> Give a description of the column, including its type and possible range of values.</li>
+          <li><strong>Incident Number:</strong> A unique 8-digit number assigned by Dispatch Center (DEM) to this Fire incident. The column is encoded as plain text.</li>
 
-          <li><strong>Column Name:</strong> Give a description of the column, including its type and possible range of values.</li>
+          <li><strong>Call Type:</strong> Type of call the incident falls into. The list is as follows: Medical Incident, Structure Fire, Alarms, Traffic Collision, Other, Citizen Assist / Service Call, Outside Fire, Administrative, Vehicle Fire,
+            Water Rescue, Gas Leak (Natural and LP Gases), Odor (Strange / Unknown), Electrical Hazard, Elevator / Escalator Rescue, Smoke Investigation (Outside), Fuel Spill, Transfer, HazMat, Industrial Accidents, Explosion, Aircraft Emergency,
+            Assist Police, Train / Rail Incident, High Angle Rescue, Watercraft in Distress, Extrication / Entrapped (Machinery, Vehicle), Oil Spill, Marine Fire, Mutual Aid / Assist Outside Agency, Confined Space / Structure Collapse, Suspicious
+            Package, Train / Rail Fire, Lightning Strike (Investigation). The column is encoded as plain text.</li>
+
+          <li><strong>Call Date:</strong> Date the call is received at the 911 Dispatch Center. Used for reporting purposes. The column is encoded as Date and Time.</li>
+
+          <li><strong>Watch Date:</strong> Watch date when the call is received. Watch date starts at 0800 each morning and ends at 0800 the next day. The column is encoded as Date and Time.</li>
+
+          <li><strong>Received DtTm:</strong> Date and time of call is received at the 911 Dispatch Center. The column is encoded as Date and Time.</li>
+
+          <li><strong>Entry DtTm:</strong> Date and time the 911 operator submits the entry of the initical call information into the CAD system. The column is encoded as Date and Time.</li>
+
+          <li><strong>Dispatch DtTm:</strong> Date and time the 911 operator dispatches this unit to the call. The column is encoded as Date and Time.</li>
+
+          <li><strong>Response DtTm:</strong> Date and time this unit acknowledges the dispatch and records that the unit is en route to the location of the call. The column is encoded as Date and Time.</li>
+
+          <li><strong>On Scene DtTm:</strong> Date and time the unit records arriving to the location of the incident. The column is encoded as Date and Time.</li>
+
+          <li><strong>Transport DtTm:</strong> If this unit is an ambulance, date and time the unit begins the transport unit arrives to hospital. The column is encoded as Date and Time.</li>
+
+          <li><strong>Hospital DtTm:</strong> If this unit is an ambulance, date and time the unit arrives to the hospital. The column is encoded as Date and Time.</li>
+
+          <li><strong>Call Final Disposition:</strong> Disposition of the call (Code). For example TH2: Transport to Hospital - Code 2, FIR: Resolved by Fire Department. The column is encoded as plain text.</li>
+
+          <li><strong>Available DtTm:</strong> Date and time this unit is not longer assigned to this call and it is available for another dispatch. The column is encoded as Date and Time.</li>
+
+          <li><strong>Address:</strong>Address of midblock point associated with incident (obfuscated address to protect caller privacy). The column is encoded as plain text.</li>
+
+          <li><strong>City:</strong> City of incident. The column is encoded as plain text.</li>
+
+          <li><strong>Zipcode of Incident:</strong> Zipcode of Incident. The column is encoded as plain text.</li>
+
+          <li><strong>Battalion:</strong> Emergency Response District (There are 9 Fire Emergency Response Districts). The column is encoded as plain text.</li>
+
+          <li><strong>Station Area:</strong> Fire Station First Response Area associated with the address of the incident. The column is encoded as plain text.</li>
+
+          <li><strong>Box:</strong> Fire box associated with the address of the incident. A box is the smallest area used to divide the City. Each box is associated with a unique unit dispatch order. The City is divided into more than 2,400 boxes.
+            The column is encoded as plain text.</li>
+
+          <li><strong>Original Priority:</strong> Initial call priority (Code 2: Non-Emergency or Code 3:Emergency). The column is encoded as plain text.</li>
+
+          <li><strong>Priority:</strong> Call priority (Code 2: Non-Emergency or Code 3:Emergency). The column is encoded as plain text.</li>
+
+          <li><strong>Final Priority:</strong> Final call priority (Code 2: Non-Emergency or Code 3:Emergency). The column is encoded as plain text.</li>
+
+          <li><strong>ALS Unit:</strong> Does this unit includes ALS (Advance Life Support) resources? Is there a paramedic in this unit? The column is encoded as check box.</li>
+
+          <li><strong>Call Type Group:</strong> Call types are divided into four main groups: Fire, Alarm, Potential Life Threatening and Non Life Threatening. The column is encoded as plain text.</li>
+
+          <li><strong>Number of Alarms:</strong> Number of alarms associated with the incident. This is a number between 1 and 5. The column is encoded as number.</li>
+
+          <li><strong>Unit Type:</strong> Unit type. The column is encoded as plain text.</li>
+
+          <li><strong>Unit sequence in call dispatch:</strong> A number that indicates the order this unit was assigned to this call. The column is encoded as number.</li>
+
+          <li><strong>Fire Prevention District:</strong> Bureau of Fire Prevention District associated with this address. The column is encoded as plain text.</li>
+
+          <li><strong>Supervisor District:</strong> Supervisor District associated with this address. The column is encoded as plain text.</li>
+
+          <li><strong>Neighborhooods - Analysis Boundaries:</strong> Neighborhood District associated with this address. The column is encoded as plain text.</li>
+
+          <li><strong>Location:</strong> Latitude and longitude of address obfuscated either to the midblock, intersection or call box. The column is encoded as location.</li>
+
+          <li><strong>RowID:</strong> Unique identifier used for managing data updates. It is the concatenation of Call Number and Unit ID separated by a dash. The column is encoded as plain text.</li>
         </ol>
-
-        <p>This will of course differ depending on the assignment and data.</p>
 
         <h3 id="wrangling">Wrangling</h3>
 
-        <p>Perhaps you had to do some data wrangling to the original dataset to prepare it for visualization. This would be a great place to discuss some of that wrangling.
-
         <pre>
-You can even put code into these pre blocks.
-  It will preserve whitespace.
-    That is helpful for formatted code.
+        Filtered by: Supervisor District is "10" ,Batallion not "B99", Station Area not null, Call Type Group not null, City is "San Francisco"
+        and Received DtTm is between 1 February 2020 till 29 February 2020
+        Grouped by: Supervisor District, Batallion, Station Area and Call Type Group
+        Aggregated by: Incident Number(count of incidents)
         </pre>
 
-        <p>You can alternatively embed a Gist if you want. There is an "embed" button on <a href="https://gist.github.com/octocat/6cad326836d38bd3a7ae">the Gist page</a> and results in something like this:</p>
-
-        <script src="https://gist.github.com/octocat/6cad326836d38bd3a7ae.js"></script>
 
         <h2 id="visualizations">Visualizations</h2>
 
-        <p>Ideally not everything would be on a single page like this example. Instead, you might want to put each section in its own webpage. You would need to carefully replicate the page template (with the header, navbar, and footer) and make the necessary updates. For example, you want the "About" navbar item to be considered active on an "About" web page.</p>
-
-        <p>For now this is just a demo. The buttons below do not go anywhere, but can be easily changed to link to different visualization pages.</p>
-
         <p class="buttons">
-          <a class="button is-large is-success" href="#">
+          <a class="button is-large is-success" id="nodechart" href="#">
             <span class="icon is-medium">
               <i class="fas fa-chart-line"></i>
             </span>
-            <span>Line Chart</span>
+            <span>Node Link diagram</span>
           </a>
 
-          <a class="button is-large is-primary" href="#">
+          <a class="button is-large is-primary" id="spacechart" href="#">
             <span class="icon is-medium">
               <i class="fas fa-chart-area"></i>
             </span>
-            <span>Area Chart</span>
+            <span>Space Filling diagram</span>
           </a>
 
-          <a class="button is-large is-info" href="#">
+          <!-- <a class="button is-large is-info" href="#">
             <span class="icon is-medium">
               <i class="fas fa-chart-bar"></i>
             </span>
@@ -195,42 +248,122 @@ You can even put code into these pre blocks.
               <i class="fas fa-chart-pie"></i>
             </span>
             <span>Pie Chart</span>
-          </a>
+          </a> -->
         </p>
 
-        <!-- https://github.com/vega/vega-embed#basic-example -->
-        <p>It is possible to embed some visualizations directly here too. Here is <a href="https://github.com/vega/vega-embed#basic-example">an example</a> using Vega-Lite:</p>
+        <section id="d3ImplementationSection">
+          <div class="container content">
+            <h2 style="font-weight: normal">For February 2020, hierarchical representation of incident count across batallions, stations and call type group for San Francisco city and supervisor district 10</h2>
+            <div id="div_nodechart">
+              <figure>
+                <h2>Traditional Node Layout, Straight Edges</h2>
+                <svg id="traditional"></svg>
+                <svg id="legend-svg" style="position: absolute;"></svg>
+                <p>Nikhil Bhutani</p>
+                <p>Source:
+                  <a href="https://data.sfgov.org/Public-Safety/Fire-Department-Calls-for-Service/nuek-vuh3/data" target="_blank">https://data.sfgov.org/Public-Safety/Fire-Department-Calls-for-Service/nuek-vuh3/data</a><br />
+                  <a href="https://sf-fire.org/fire-station-locations" target="_blank">https://sf-fire.org/fire-station-locations</a><br />
+                  <a href="https://sfgov.org/ccsfgsa/new-san-francisco-supervisorial-district-map" target="_blank">https://sfgov.org/ccsfgsa/new-san-francisco-supervisorial-district-map</a>
+                </p>
+              </figure>
+              <h4>Interactivity for the Visualization</h4>
+              <p>Following Interactivity have been implemented for the visualization:</p>
+              <ul>
+                <li>On demand data display i.e. when a user hovers on a circle then the node label gets displayed.</li>
+              </ul>
 
-        <script src="https://cdn.jsdelivr.net/npm/vega@5.9.0"></script>
-        <script src="https://cdn.jsdelivr.net/npm/vega-lite@4.0.2"></script>
-        <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.2.1"></script>
+              <h4>Data Encoding and Interpretation</h4>
 
-        <div id="vis"></div>
+              <p>
+                <ul>
+                  <li>Nodes laid out by level, root at top. The supervisor district is at root level, battalion is at first level,
+                    station area is at second level and call type group is at leaf level along with incident count</li>
+                  <li>Edges connect adjacent nodes</li>
+                </ul>
+              </p>
+            </div>
+            <div id="div_spacechart" style="display: none">
+              <figure>
+                <h2>Circle Packing</h2>
+                <svg id="circle_packing"></svg>
+                <svg id="legend-svg" style="position: absolute;"></svg>
+                <p>Nikhil Bhutani</p>
+                <p>Source:
+                  <a href="https://data.sfgov.org/Public-Safety/Fire-Department-Calls-for-Service/nuek-vuh3/data" target="_blank">https://data.sfgov.org/Public-Safety/Fire-Department-Calls-for-Service/nuek-vuh3/data</a><br />
+                  <a href="https://sf-fire.org/fire-station-locations" target="_blank">https://sf-fire.org/fire-station-locations</a><br />
+                  <a href="https://sfgov.org/ccsfgsa/new-san-francisco-supervisorial-district-map" target="_blank">https://sfgov.org/ccsfgsa/new-san-francisco-supervisorial-district-map</a>
+                </p>
+              </figure>
+              <h4>Interactivity for the Visualization</h4>
+              <p>Following interactivities have been implemented for the visualization:</p>
+              <ul>
+                <li>On demand data display i.e. when a user hovers on a circle then the node label gets displayed.</li>
+                <li>The visualization has the ability of zooming. It can be zoomed in and out by clicking on circles.</li>
+              </ul>
 
+              <h4>Data Encoding and Interpretation</h4>
+
+              <p>
+                <ul>
+                  <li>Root is the outer-most circle(largest) and leaves are inner-most circle(smallest). The supervisor district is at root level, battalion is at first level,
+                    station area is at second level and call type group is at leaf level along with incident count.</li>
+                  <li>Circles are scaled by incident count</li>
+                </ul>
+              </p>
+            </div>
+
+            <!-- load D3 //-->
+            <script src="https://d3js.org/d3.v5.min.js"></script>
+            <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+            <!-- include d3-legend: https://d3-legend.susielu.com/ -->
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.min.js" integrity="sha256-qo76Vs9B6JAALbrTn+PcN1r09hbNLd2M78V19glOMeU=" crossorigin="anonymous"></script>
+
+            <!-- load custom CSS //-->
+            <link rel="stylesheet" href="hierarchicalChart/style.css">
+
+            <!-- load custom JavaScript //-->
+            <script src="hierarchicalChart/helpers.js"></script>
+            <script src="hierarchicalChart/tooltip.js"></script>
+            <script src="hierarchicalChart/chart.js"></script>
+          </div>
+        </section>
+
+        <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
         <script type="text/javascript">
-        var spec = "https://raw.githubusercontent.com/vega/vega/master/docs/examples/bar-chart.vg.json";
-        vegaEmbed('#vis', spec).then(function(result) {
-          // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
-        }).catch(console.error);
+          $('#nav_nodechart').click(function() {
+            $('#nodechart').trigger('click');
+          });
+
+          $('#nav_spacechart').click(function() {
+            $('#spacechart').trigger('click');
+          });
+
+          $('.button').click(function(e) {
+            if (this.id == "nodechart") {
+              $('#div_nodechart').css('display', 'block');
+              $('#div_spacechart').css('display', 'none');
+            } else {
+              $('#div_spacechart').css('display', 'block');
+              $('#div_nodechart').css('display', 'none');
+            }
+            e.preventDefault();
+          });
         </script>
 
-        <h4>Instructions</h4>
+        <h4>Conclusion</h4>
 
-        <p>You will likely need to include instructions on how to interpet and use the visualization. In the case above, if you click the three dots <i class="fas fa-ellipsis-h has-text-grey-light	"></i> above it will open a menu where you can either save the visualization to a SVG or PNG, or alternatively open it up in the online Vega Editor.</p>
+        <p>For February 2020, more number of incidents are of type "Potentially Life Threatening" under battalion "B10", station area "17" and supervisor district "10".</p>
 
-        <h4>Discussion</h4>
-
-        <p>You may also need other sections, like a discussion section, per-visualization section on data wrangling, and others. Because of the extra content and code visualizations take, it might be worthwhile to break up your pages into one home page and then one page per visualization.</p>
+        <h4>Attribution</h4>
+        <p>
+          <a href="https://bl.ocks.org/fdlk/076469462d00ba39960f854df9acda56" target="_blank">https://bl.ocks.org/fdlk/076469462d00ba39960f854df9acda56</a><br />
+          <a href="http://bl.ocks.org/sjengle/cdda19c7942c2ff569161ee0566e1396" target="_blank">http://bl.ocks.org/sjengle/cdda19c7942c2ff569161ee0566e1396</a>
+        </p>
 
         <span class="heading">Acknowledgements</span>
 
-        <p>
-          <a href="#">Link to insiration</a><br/>
-          <a href="#">Link to StackOverflow snippet</a>
-        </p>
-
         <p class="is-6">
-          <em>Thanks to Person Name for their suggestion to do something with the visualization.</em>
+          <em>Thanks to Sophie Engle for her valuable suggestions on the visualization.</em>
         </p>
 
         <h2 id="grade">Grade</h2>
@@ -256,27 +389,17 @@ You can even put code into these pre blocks.
 
           <tbody>
             <tr>
-              <td>D</td>
-              <td><i class="has-text-success fas fa-check-circle"></i></td>
-              <td>Discussion of how this grade level was satisfied. Exactly how this section should look will depend on the assignment in question. There is no requirement for formatting in this way. This is just an example of what a table element might look like for this informaiton.</td>
-            </tr>
-
-            <tr>
-              <td>C</td>
-              <td><i class="has-text-success fas fa-check-circle"></i></td>
-              <td>Discussion of how this grade level was satisfied.</td>
-            </tr>
-
-            <tr>
-              <td>B</td>
-              <td><i class="has-text-warning far fa-check-circle"></i></td>
-              <td>Discussion of how this grade level was satisfied.</td>
-            </tr>
-
-            <tr>
               <td>A</td>
-              <td><i class="has-text-danger fas fa-times-circle"></i></td>
-              <td>Discussion of how this grade level was not satisfied.</td>
+              <td><i class="has-text-success fas fa-check-circle"></i></td>
+              <td>
+                <p>I have satisfied this grade requirement by successfully completing below requirements:</p>
+                <ul>
+                  <li>Wrangle data into a hierarchical JSON format.</li>
+                  <li>Implemented node/link diagram(Traditional Node Layout, Straight Edges) with details-on-demand interactivity in D3v5.</li>
+                  <li>Implement space filling diagram(Circle Packing) with details-on-demand interactivity in D3v5.</li>
+                  <li>Implement filtering, brushing, or zooming for one of the visualizations(Circle Packing).</li>
+                </ul>
+              </td>
             </tr>
           </tbody>
 
@@ -289,22 +412,24 @@ You can even put code into these pre blocks.
         <article class="media">
           <!-- TODO: Replace with profile photo -->
           <figure class="media-left">
-            <p class="image is-128x128"><img class="is-rounded" src="profile.png"></p>
+            <p class="image is-128x128"><img class="is-rounded" src="nikhil.jpg"></p>
           </figure>
 
           <div class="media-content">
             <div class="content">
               <!-- TODO: Replace with contact information -->
               <p>
-                <strong>Full Name</strong><br/>
-                CS Major, <a href="https://www.usfca.edu/">University of San Francisco</a><br/>
-                <em>Expected Graduation: 20??</em><br/>
-                <i class="fas fa-envelope"></i> <a href="mailto:username@dons.usfca.edu">username@dons.usfca.edu</a>
+                <strong>Nikhil Bhutani</strong><br />
+                CS Major, <a href="https://www.usfca.edu/">University of San Francisco</a><br />
+                <em>Expected Graduation: 2022</em><br />
+                <i class="fas fa-envelope"></i> <a href="mailto:nbhutani2@dons.usfca.edu">nbhutani2@dons.usfca.edu</a>
               </p>
 
               <!-- TODO: Replace with brief biography -->
               <p>
-                Here is a brief bio about yourself. A good rule of thumb is to include at least one technical tidbit (favorite area or course within computer science), and one fun tidbit (such as loving dogs).
+                I am a former employee of Silicus Technologies(IT multinational firm).
+                I have completed my Bachelors in Electronics and Telecommunication Engineering and currently pursuing my Masters in Computer Science at USF.
+                I have nearly 5 years of professional experience in Web/app development/maintainance. My area of interest is Web/App Development, NPL(Natural Language Processing), Blockchain and Machine Learning.
               </p>
 
               <!-- TODO: Replace or remove tags -->
@@ -312,17 +437,23 @@ You can even put code into these pre blocks.
               <div class="heading">Skills</div>
 
               <div class="tags">
-                <span class="tag">Python</span>
                 <span class="tag">C</span>
                 <span class="tag">Java</span>
-                <span class="tag">JavaScript</span>
+                <span class="tag">Python</span>
+                <span class="tag">C#</span>
+                <span class="tag">JavaScript/JQuery</span>
+                <span class="tag">WebServices</span>
+                <span class="tag">Angular JS</span>
                 <span class="tag">HTML</span>
                 <span class="tag">CSS</span>
+                <span class="tag">ASP.Net</span>
+                <span class="tag">GitHub</span>
                 <span class="tag">SVG</span>
               </div>
             </div>
           </div>
         </article>
+        <!-- End profile box -->
         <!-- End profile box -->
 
       </div>
@@ -362,22 +493,22 @@ You can even put code into these pre blocks.
   <!-- Mobile menu responsiveness -->
   <!-- https://bulma.io/documentation/components/navbar/ -->
   <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+    document.addEventListener('DOMContentLoaded', () => {
+      const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
 
-    if ($navbarBurgers.length > 0) {
-      $navbarBurgers.forEach( el => {
-        el.addEventListener('click', () => {
-          const target = el.dataset.target;
-          const $target = document.getElementById(target);
-          el.classList.toggle('is-active');
-          $target.classList.toggle('is-active');
+      if ($navbarBurgers.length > 0) {
+        $navbarBurgers.forEach(el => {
+          el.addEventListener('click', () => {
+            const target = el.dataset.target;
+            const $target = document.getElementById(target);
+            el.classList.toggle('is-active');
+            $target.classList.toggle('is-active');
+          });
         });
-      });
-    }
-  });
+      }
+    });
   </script>
   <!-- End mobile menu responsiveness -->
-  </body>
+</body>
 
 </html>
